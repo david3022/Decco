@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Decobay Interiors</title>
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        gap: 0;
+    }
+
+
+    .navigator {
+        width: 100%;
+        top: 0;
+        color: white;
+        background-color: transparent;
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        z-index: 100;
+
+    }
+
+    .navigator h1, .navigator h2 {
+    color: white;
+    -webkit-text-stroke: 1px black; /* Borde negro sólido */
+}
+
+    .menu {
+        margin: 2vh 8vw;
+    }
+
+    .name {
+        margin-left: 2vw;
+    }
+
+    .banners {
+        overflow: hidden;
+    }
+
+    .banner1 {
+        position: relative;
+        /* Cambia fixed a relative */
+        width: 100%;
+        height: 100vh;
+        background-image: url('./src/img/banner110.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        /* Para el efecto de parallax */
+    }
+
+
+
+    .banner2 {
+        background-color: aquamarine;
+        position: relative;
+
+        z-index: 1;
+    }
+
+
+    .banner1 img,
+    .banner2 img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+    }
+
+
+
+
+    /*   html2   */
+
+    .divs {
+        width: 100%;
+        height: 100vh;
+        /* Espacio suficiente para los botones */
+        background-color: white;
+        /* Color negro visible */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .picture {
+        width: 25vw;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        border-radius: 10px;
+        position: absolute;
+    }
+
+    .picture img {
+        width: 32vh;
+        height: 18vh;
+        object-fit: cover;
+    }
+
+    /* Posiciones cardinales */
+
+
+    .norte {
+
+        top: 40%;
+        /* Posición inicial */
+        left: 40%;
+        transition: top 2s ease-out, left 2s ease-out;
+    }
+
+    .sur {
+
+        top: 50%;
+        /* Cambio: más cerca del centro */
+        left: 50%;
+        transition: top 2s ease-out, left 2s ease-out;
+    }
+
+
+    .este {
+
+        right: 50%;
+        /* Cambio: más cerca del centro */
+        top: 50%;
+        transform: translate(50%, -50%);
+        transition: right 2s ease-out, top 2s ease-out;
+    }
+
+
+    .oeste {
+
+        left: 50%;
+        /* Cambio: más cerca del centro */
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: left 2s
+    }
+
+
+
+
+    .noreste {
+
+        right: 50%;
+        /* Cerca del centro */
+        top: 50%;
+        transform: translate(50%, -50%);
+        transition: right 2s ease-out, top 2s ease-out;
+    }
+
+
+
+    .suroeste {
+
+        left: 50%;
+        /* Cerca del centro */
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: left 2s ease-out, top 2s ease-out;
+    }
+
+    .norte,
+    .sur,
+    .este,
+    .oeste,
+    .noreste,
+    .suroeste {
+        position: absolute;
+        width: 15vw;
+        /* Ajustamos ligeramente el tamaño */
+        height: 12vh;
+        min-width: 120px;
+        /* Mínimo tamaño para pantallas pequeñas */
+        min-height: 120px;
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        /* Estética mejorada */
+    }
+
+
+
+    .decobay,
+    .welcome {
+        color: black;
+        position: absolute;
+        font-size: 4rem;
+        opacity: 0;
+        /* Inician invisibles */
+        transition: top 2s ease-out, left 2s ease-out, opacity 2s ease-out;
+        z-index: 999;
+    }
+
+    /* Posición inicial */
+    .decobay {
+        top: 60%;
+        left: 40%;
+    }
+
+    .welcome {
+        top: 60%;
+        right: 10%;
+    }
+
+
+
+    /* Fixed */
+
+    .fixed {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .image img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+    }
+
+    .first {
+        z-index: -3;
+    }
+
+    .second {
+        z-index: -2;
+    }
+
+    .third {
+        z-index: -1;
+    }
+
+
+    footer {
+        height: 20vh;
+    }
+
+
+    @media screen and (max-width: 768px) {
+
+        /* Ajustado para móviles */
+        .norte,
+        .sur,
+        .este,
+        .oeste,
+        .noreste,
+        .suroeste {
+            height: 7vh;
+            width: auto;
+        }
+
+        .noreste,
+        .sur {
+            display: none;
+        }
+
+        .decobay,
+        .welcome {
+            font-size: 2rem;
+        }
+
+        .transforming,
+        .visions,
+        .reality {
+            font-size: 1rem;
+        }
+    }
+
+
+
+
+    /* Transforming visions */
+
+    .transform {
+        position: relative;
+        /* Define un contexto para los elementos internos */
+        height: 500vh;
+        /* Suficiente espacio para el scroll */
+        width: 100%;
+
+    }
+
+    /* Contenedor del texto fijo dentro de la sección */
+    .fixed-text-container {
+        position: sticky;
+        /* Se queda visible dentro de la sección transform */
+        top: 20%;
+        /* Ajusta la altura donde se mantiene */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+        /* Evita interferencias con imágenes */
+        z-index: 50;
+        /* Asegura que está encima de las imágenes dentro de transform */
+    }
+
+    /* Estilización del texto */
+    .text-box {
+        width: 100%;
+        height: 15vh;
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .transforming,
+    .visions,
+    .reality {
+        width: 80%;
+        /* font-size: clamp(2rem, 6vw, 4rem); */
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: black;
+        transform: translateY(150px);
+        transition: transform 0.8s ease-out;
+        z-index: 100;
+    }
+
+
+
+
+    /* Imágenes con scroll */
+    .scroll-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+
+    }
+
+    .scroll-image img {
+        width: 100%;
+        height: 100%;
+
+    }
+
+    /* Posiciones de las imágenes en el scroll */
+    .primero {
+        top: 100vh;
+        left: 10vw;
+        height: 50vh;
+        width: auto;
+
+    }
+
+
+    .segundo {
+        top: 150vh;
+        left: 50%;
+        height: 50vh;
+        width: 80vh;
+    }
+
+    .tercero {
+        top: 220vh;
+        left: 10%;
+        height: 36vh;
+        width: 64vh;
+    }
+
+
+
+
+    .cuarto {
+        top: 260vh;
+        left: 65%;
+        height: 36vh;
+        width: 64vh;
+    }
+
+    .quinto {
+        top: 330vh;
+        left: 60%;
+        height: 36vh;
+        width: 64vh;
+    }
+
+    .sexto {
+        top: 390vh;
+        left: 10%;
+        height: 36vh;
+        width: 64vh;
+    }
+
+
+    footer {
+        height: 30vh;
+        bottom: 0;
+        width: 100%;
+        background: #1a1a1a;
+        color: white;
+        margin-top: 10vh;
+        padding: 20px 0;
+        text-align: center;
+        z-index: 999;
+    }
+
+    .footer-bottom {
+        margin: 0;
+        /* Elimina espacios innecesarios */
+        padding: 10px;
+        bottom: 0;
+    }
+
+
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+        max-width: 1200px;
+
+    }
+
+    .footer-column {
+        flex: 1;
+
+    }
+
+    .footer-column h3 {
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-column ul li {
+        margin: 8px 0;
+    }
+
+    .footer-column a {
+        color: #ddd;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .footer-column a:hover {
+        color: #f4a261;
+    }
+
+    .social-links img {
+        width: 30px;
+        margin: 0 10px;
+    }
+</style>
+
+<body>
+
+    <div class="navigator">
+        <div class="name">
+            <h1>Decobay Interiors</h1>
+        </div>
+        <div class="menu">
+
+            <h2>Menu</h2>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="banners">
+
+        <div class="banner1">
+
+
+        </div>
+
+        <div class="banner2">
+            <img src="./src/img/banner220.jpg" alt="portada">
+
+        </div>
+
+
+    </div>
+
+
+
+    <section class="divs">
+        <h2 class="decobay"><strong>Decobay Interiors</strong></h2>
+        <h2 class="welcome"><strong>Welcome</strong></h2>
+        <div class="norte picture">
+            <img src="./src/img/banner1.jpeg" alt="" srcset="">
+        </div>
+        <div class="sur picture">
+            <img src="./src/img/banner2.jpeg" alt="" srcset="">
+        </div>
+        <div class="este picture">Este
+            <img src="./src/img/banner3.jpeg" alt="" srcset="">
+        </div>
+        <div class="oeste picture" width="45vh">
+            <img src="./src/img/banner4.jpeg" width="55px" alt="" srcset="">
+        </div>
+        <div class="noreste picture" width="70vh">
+            <img src="./src/img/banner5.jpeg" alt="" srcset="">
+        </div>
+        <div class="suroeste picture">
+            <img src="./src/img/first.jpeg" alt="" srcset="">
+        </div>
+    </section>
+
+
+
+
+
+
+    <section class="fixed">
+        <div class="image first">
+            <img src="./src/img/first.jpeg" alt="Primera imagen">
+        </div>
+        <div class="image second">
+            <img src="./src/img/second.jpeg" alt="Segunda imagen">
+        </div>
+        <div class="image third">
+            <img src="./src/img/third.jpeg" alt="Tercera imagen">
+        </div>
+    </section>
+
+
+
+    <section class="what-we-do">
+
+    </section>
+
+
+
+    <section class="news">
+
+    </section>
+
+
+
+
+
+    <section class="transform ">
+        <!-- Texto FIXED (siempre visible) -->
+        <div class="fixed-text-container">
+            <div class="text-box">
+                <div class="transforming">
+                    <h2>Transforming</h2>
+                </div>
+            </div>
+            <div class="text-box">
+                <div class="visions">
+                    <h2>visions</h2>
+                </div>
+            </div>
+            <div class="text-box">
+                <div class="reality">
+                    <h2>→ Into Reality</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Imágenes con scroll -->
+        <div class="scroll-image primero">
+            <img src="./src/img/banner1.jpeg" alt="">
+        </div>
+        <div class="scroll-image segundo">
+            <img src="./src/img/banner2.jpeg" alt="">
+        </div>
+        <div class="scroll-image tercero">
+            <img src="./src/img/banner3.jpeg" alt="">
+        </div>
+        <div class="scroll-image cuarto">
+            <img src="./src/img/banner4.jpeg" alt="">
+        </div>
+        <div class="scroll-image quinto">
+            <img src="./src/img/banner5.jpeg" alt="">
+        </div>
+        <div class="scroll-image sexto">
+            <img src="./src/img/first.jpeg" alt="">
+        </div>
+
+
+
+
+
+
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <!-- Sección de contacto -->
+            <div class="footer-column">
+                <h3>Contacto</h3>
+                <p><strong>Teléfono:</strong> +58 123 456 7890</p>
+                <p><strong>Email:</strong> contacto@decobay.com</p>
+                <p><strong>Dirección:</strong> Calle Principal, Caracas, Venezuela</p>
+            </div>
+
+            <!-- Enlaces rápidos -->
+            <div class="footer-column">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Servicios</a></li>
+                    <li><a href="#">Proyectos</a></li>
+                    <li><a href="#">Testimonios</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="footer-column">
+                <h3>Redes Sociales</h3>
+                <div class="social-links">
+                    <a href="#"><img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYfRZOfRyyDskFIvBevwSIXv7vDjxMRl7_Jg&s"
+                            width="70px" height="38px" alt="Facebook"></a>
+                    <a href="#"><img src="https://cdn.pixabay.com/photo/2021/06/15/12/14/instagram-6338393_1280.png"
+                            width="70px" height="38px" alt="Instagram"></a>
+                    <a href="#"><img src="https://cdn.pixabay.com/photo/2017/08/23/11/30/twitter-2672572_640.jpg"
+                            width="70px" height="38px" alt="Pinterest"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Derechos de autor -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Decobay Interiors - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
+    <!-- Cambio de color de letras del navigator -->
+
+
+
+    
+
+
+
+
+    <!-- Animaciones de la sección Divs  -->
+    <script>
+
+        window.addEventListener("scroll", () => {
+            let scrollY = window.scrollY;
+            let maxScroll = 500; // Ajusta el límite según tu diseño
+
+
+            let decobay = document.querySelector(".decobay");
+            let welcome = document.querySelector(".welcome");
+            let norte = document.querySelector(".norte");
+            let sur = document.querySelector(".sur");
+            let este = document.querySelector(".este");
+            let oeste = document.querySelector(".oeste");
+            let noreste = document.querySelector(".noreste");
+            let suroeste = document.querySelector(".suroeste");
+
+            if (scrollY <= maxScroll) {
+                // Norte (mueve hacia arriba y ligeramente a la derecha)
+                let newTopNorte = 60 - (scrollY * 0.005);
+                let newLeftNorte = 40 + (scrollY * 0.001);
+                norte.style.top = `${newTopNorte}%`;
+                norte.style.left = `${newLeftNorte}%`;
+
+                // Sur (corregido: ahora usa `top` en lugar de `bottom`)
+                let newTopSur = 5 + (scrollY * 0.005); // Incrementa top para bajar
+                let newLeftSur = 50 - (scrollY * 0.001);
+                sur.style.top = `${newTopSur}%`;
+                sur.style.left = `${newLeftSur}%`;
+
+                // Este (mueve hacia la derecha)
+                let newRightEste = 5 + (scrollY * 0.005);
+                let newTopEste = 40 - (scrollY * 0.002);
+                este.style.right = `${newRightEste}%`;
+                este.style.top = `${newTopEste}%`;
+
+                // Oeste (mueve hacia la izquierda)
+                let newLeftOeste = 5 + (scrollY * 0.005);
+                let newTopOeste = 40 - (scrollY * 0.002);
+                oeste.style.left = `${newLeftOeste}%`;
+                oeste.style.top = `${newTopOeste}%`;
+
+                // Noreste (mueve hacia arriba y la derecha)
+                let newRightNoreste = 50 - (scrollY * 0.005);
+                let newTopNoreste = 50 - (scrollY * 0.002);
+                noreste.style.right = `${newRightNoreste}%`;
+                noreste.style.top = `${newTopNoreste}%`;
+
+                // Suroeste (mueve hacia abajo y la izquierda)
+                let newLeftSuroeste = 50 + (scrollY * 0.005);
+                let newTopSuroeste = 50 + (scrollY * 0.002);
+                suroeste.style.left = `${newLeftSuroeste}%`;
+                suroeste.style.top = `${newTopSuroeste}%`;
+
+
+                let newTopDecobay = 30 + (scrollY * 0.02);
+                let newLeftDecobay = 5 + (scrollY * 0.05);
+                let opacityDecobay = scrollY / maxScroll;
+
+                let newTopWelcome = 40 - (scrollY * 0.02);
+                let newRightWelcome = 5 + (scrollY * 0.05);
+                let opacityWelcome = scrollY / maxScroll;
+
+                decobay.style.top = `${newTopDecobay}%`;
+                decobay.style.left = `${newLeftDecobay}%`;
+                decobay.style.opacity = opacityDecobay;
+
+                welcome.style.top = `${newTopWelcome}%`;
+                welcome.style.right = `${newRightWelcome}%`;
+                welcome.style.opacity = opacityWelcome;
+
+
+            } else {
+                // Fijamos la posición final correctamente
+                norte.style.top = "15%";
+                norte.style.left = "35%";
+
+                sur.style.top = "75%"; // Ahora correctamente abajo
+                sur.style.left = "45%";
+
+                este.style.right = "85%";
+                este.style.top = "45%";
+
+                oeste.style.left = "80%";
+                oeste.style.top = "75%";
+
+                // Posición final
+                noreste.style.right = "17%";
+                noreste.style.top = "35%";
+
+                suroeste.style.left = "25%";
+                suroeste.style.top = "80%";
+
+
+                // Fijamos la posición final
+                decobay.style.top = "37%";
+                decobay.style.left = "35%";
+                decobay.style.opacity = "1";
+
+                welcome.style.top = "43%";
+                welcome.style.right = "35%";
+                welcome.style.opacity = "1";
+
+            }
+        });
+
+
+    </script>
+
+
+
+    <!-- Seccion transform -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const transforming = document.querySelector('.transforming');
+            const visions = document.querySelector('.visions');
+            const reality = document.querySelector('.reality');
+
+            // Animación inicial del texto
+            setTimeout(() => {
+                transforming.style.transform = 'translateY(0)';
+
+                setTimeout(() => {
+                    visions.style.transform = 'translateY(0)';
+
+                    setTimeout(() => {
+                        reality.style.transform = 'translateY(0)';
+
+                        // Movimiento horizontal después de aparecer
+                        setTimeout(() => {
+                            visions.style.transform = 'translateY(0) translateX(-10%)';
+                            reality.style.transform = 'translateY(0) translateX(10%)';
+                        }, 500);
+                    }, 300);
+                }, 300);
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>
